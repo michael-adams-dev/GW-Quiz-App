@@ -24,9 +24,12 @@ class Menu
     loop do
       case user_selection
       when 1
-        RunApp.get_picuki_doc(1)
+        RunApp.get_qanda_urls(1)
       when 2
         RunApp.get_picuki_doc(2)
+        puts "Finding quiz data"
+        data = QuizData.new(chosen_quiz)
+        puts data.get_image_urls
       when 3
         puts "You want to see the quiz db"
         puts ""
