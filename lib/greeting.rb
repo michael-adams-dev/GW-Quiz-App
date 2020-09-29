@@ -11,10 +11,10 @@ class Greeting
   end
 
   def greet
+    puts ""
     puts "Welcome to the Good Weekend Quiz App!"
     puts "Here you can download the Good Weekend quiz from the last two weeks."
     puts "Or you can select a prior quiz from the quiz database."
-    puts "Please wait a moment..."
     puts ""
   end
 

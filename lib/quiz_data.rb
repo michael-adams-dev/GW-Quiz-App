@@ -17,6 +17,6 @@ class QuizData
 
     answers_image_url = image_containers[3]['src']
 
-    puts [questions_image_url, answers_image_url]
+    return [questions_image_url, answers_image_url]
   end
 end
