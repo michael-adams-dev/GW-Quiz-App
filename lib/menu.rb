@@ -24,13 +24,9 @@ class Menu
     loop do
       case user_selection
       when 1
-        doc = PicukiDoc.new
-        puts doc.get_selected_quiz_url(1)
-        puts ""
+        RunApp.get_picuki_doc(1)
       when 2
-        doc = PicukiDoc.new
-        puts doc.get_selected_quiz_url(2)
-        puts ""
+        RunApp.get_picuki_doc(2)
       when 3
         puts "You want to see the quiz db"
         puts ""
@@ -38,7 +34,7 @@ class Menu
         puts "You want to check your scores"
         puts ""
       when 5
-        quit
+        exit
       end
     end
   end

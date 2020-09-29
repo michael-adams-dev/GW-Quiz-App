@@ -9,23 +9,27 @@ require 'nokogiri'
 
 class RunApp
 
+  include QuizHelper
+
   def initialize
 
   end
 
-  def run_greeting
+  def self.run_greeting
     start = Greeting.new
     puts start.greet
     puts start.random_fact
   end
 
-  def get_picuki_doc
-    return PicukiDoc.new("https://www.picuki.com/profile/goodweekendquiz")
+  def self.get_picuki_doc(num)
+    puts "Finding quiz"
+    doc = PicukiDoc.new(PICUKI)
+    puts doc.get_selected_quiz_url(num)
+    puts ""
   end
 end
 
-run = RunApp.new
-run.run_greeting
+RunApp.run_greeting
 
 menu = Menu.new
 
