@@ -10,7 +10,10 @@ class Menu
 
   end
 
+  # User selection method creates the main menu for the user
+  # and displays it on the screen to get their selection
   def user_selection
+    puts ""
     PROMPT.select("What would you like to do?") do |menu|
       menu.choice "Download this week's quiz", 1
       menu.choice "Download last week's quiz", 2
@@ -20,6 +23,8 @@ class Menu
     end
   end
 
+  # Display menu method creates a loop to check the user's selection
+  # from the main menu and then run methods depending on the selection
   def display_menu
     loop do
       case user_selection

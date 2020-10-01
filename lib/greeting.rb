@@ -18,6 +18,9 @@ class Greeting
     puts ""
   end
 
+  # Method will get a random number in a range equal to the length
+  # of the fun facts array. It them uses this number as an index to
+  # get a random fact from the array and print to screen.
   def random_fact
     fact_num = rand(0..1)
     puts "Did you know? #{FACTS[fact_num]}"

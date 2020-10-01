@@ -10,7 +10,7 @@ class QuizInitialiser
   include QuizHelper
 
   def initilize
-
+    
   end
 
   def self.download_images(arr)
@@ -26,6 +26,8 @@ class QuizInitialiser
     puts ""
     questions_string = RTesseract.new(arr[0]).to_s
     answers_string = RTesseract.new(arr[1]).to_s
+    puts questions_string
+    puts answers_string
     return [questions_string, answers_string]
   end
 end
