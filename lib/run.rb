@@ -5,13 +5,14 @@ require_relative 'picuki_doc'
 require_relative 'quiz_data'
 require_relative 'quiz_initialiser'
 require_relative 'quiz'
+# require_relative 'prep_questions'
+require_relative 'prepare_quiz'
 
 require 'tty-prompt'
 require 'open-uri'
 require 'nokogiri'
 
 class RunApp
-
   include QuizHelper
 
   def initialize
@@ -54,6 +55,8 @@ class RunApp
     QuizInitialiser.download_images(urls)
     QuizInitialiser.images_to_strings(PATH_TO_IMAGES)
   end
+
+  
 end
 
 RunApp.run_greeting

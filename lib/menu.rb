@@ -1,5 +1,6 @@
 require_relative 'greeting'
 require_relative 'quiz_helper'
+require_relative 'prepare_quiz'
 
 require 'tty-prompt'
 
@@ -29,9 +30,17 @@ class Menu
     loop do
       case user_selection
       when 1
-        RunApp.get_quiz_strings(1)
+        q_and_a_strings = RunApp.get_quiz_strings(1)
+        question = PrepQuizItems.new(q_and_a_strings[0])
+        question_hash = question.q_string_to_hash
+        answer = PrepQuizItems.new(q_and_a_strings[1])
+        answer_hash = answer.a_string_to_hash
       when 2
-        RunApp.get_quiz_strings(2)
+        q_and_a_strings = RunApp.get_quiz_strings(2)
+        question = PrepQuizItems.new(q_and_a_strings[0])
+        question_hash = question.q_string_to_hash
+        answer = PrepQuizItems.new(q_and_a_strings[1])
+        answer_hash = answer.a_string_to_hash
       when 3
         puts "You want to see the quiz db"
         puts ""
