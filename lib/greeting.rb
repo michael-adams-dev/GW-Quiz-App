@@ -10,12 +10,12 @@ class Greeting
     @facts = FACTS
   end
 
-  def greet
+  def self.greet
     puts ""
     puts "Welcome to the Good Weekend Quiz App!"
-    puts "Here you can download the Good Weekend quiz from the last two weeks."
-    puts "Or you can select a prior quiz from the quiz database."
     puts ""
+    puts "Here you can download the Good Weekend quiz from the last two weeks."
+    puts "Alternatively, you can select a prior quiz from the quiz database."
   end
 
   # Method will get a random number in a range equal to the length
@@ -24,6 +24,8 @@ class Greeting
   def random_fact
     fact_num = rand(0..1)
     puts "Did you know? #{FACTS[fact_num]}"
+    puts ""
+    puts "Your quiz will be ready in a moment."
     puts ""
   end
 end

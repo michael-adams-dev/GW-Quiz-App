@@ -1,4 +1,5 @@
 require_relative 'quiz_helper'
+require_relative 'greeting'
 
 require 'down'
 require 'rtesseract'
@@ -10,7 +11,7 @@ class QuizInitialiser
   include QuizHelper
 
   def initilize
-    
+
   end
 
   def self.download_images(arr)
@@ -22,12 +23,12 @@ class QuizInitialiser
   end
 
   def self.images_to_strings(arr)
-    puts "Converting quiz images..."
+    puts "Preparing quiz..."
     puts ""
+    fact = Greeting.new
+    fact.random_fact
     questions_string = RTesseract.new(arr[0]).to_s
     answers_string = RTesseract.new(arr[1]).to_s
-    puts questions_string
-    puts answers_string
     return [questions_string, answers_string]
   end
 end
