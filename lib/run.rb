@@ -5,7 +5,6 @@ require_relative 'picuki_doc'
 require_relative 'quiz_data'
 require_relative 'quiz_initialiser'
 require_relative 'quiz'
-# require_relative 'prep_questions'
 require_relative 'prepare_quiz'
 
 require 'tty-prompt'
@@ -22,9 +21,7 @@ class RunApp
   # Creates a new greeting object then prints the greeting
   # and a random fact at the start of the app
   def self.run_greeting
-    start = Greeting.new
-    puts start.greet
-    puts start.random_fact
+    puts Greeting.greet
   end
 
   # This will create a new Picuki doc object 
@@ -56,11 +53,18 @@ class RunApp
     QuizInitialiser.images_to_strings(PATH_TO_IMAGES)
   end
 
-  
+  def self.convert_quiz_strings_to_hashes(num)
+    q_and_a_strings = RunApp.get_quiz_strings(num)
+    question = PrepQuizItems.new(q_and_a_strings[0])
+    question_hash = question.q_string_to_hash
+    answer = PrepQuizItems.new(q_and_a_strings[1])
+    answer_hash = answer.a_string_to_hash
+    return [question_hash, answer_hash]
+  end
 end
 
 RunApp.run_greeting
 
 menu = Menu.new
 
-menu.display_menu
+menu.display_main_menu
