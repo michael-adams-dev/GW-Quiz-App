@@ -31,4 +31,6 @@ class QuizInitialiser
     answers_string = RTesseract.new(arr[1]).to_s
     return [questions_string, answers_string]
   end
+
+  
 end

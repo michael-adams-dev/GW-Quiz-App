@@ -25,7 +25,7 @@ class Greeting
     fact_num = rand(0..1)
     puts "Did you know? #{FACTS[fact_num]}"
     puts ""
-    puts "Your quiz will be ready in a moment."
+    puts "Your quiz is almost ready..."
     puts ""
   end
 end

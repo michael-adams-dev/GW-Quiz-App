@@ -3,8 +3,8 @@ class Quiz
   attr_reader :questions, :actual_answers
   attr_accessor :id, :date, :user_answers, :score
   
-  def initialize(questions_and_answers)
-    @id = 
+  def initialize(questions_and_answers, id*, date*, user_answers*, score*)
+    @id = id
     @date = ''
     @questions = questions_and_answers.first
     @actual_answers = questions_and_answers.last
