@@ -13,7 +13,7 @@ class Menu
 
   # User selection method creates the main menu for the user
   # and displays it on the screen to get their selection
-  def user_selection
+  def main_menu_selection
     puts ""
     PROMPT.select("What would you like to do?") do |menu|
       menu.choice "Download this week's quiz", 1
@@ -26,21 +26,15 @@ class Menu
 
   # Display menu method creates a loop to check the user's selection
   # from the main menu and then run methods depending on the selection
-  def display_menu
+  def display_main_menu
     loop do
-      case user_selection
+      case main_menu_selection
       when 1
-        q_and_a_strings = RunApp.get_quiz_strings(1)
-        question = PrepQuizItems.new(q_and_a_strings[0])
-        question_hash = question.q_string_to_hash
-        answer = PrepQuizItems.new(q_and_a_strings[1])
-        answer_hash = answer.a_string_to_hash
+        inputs = RunApp.convert_quiz_strings_to_hashes(1)
+        Quiz.begin_quiz_menu(inputs)
       when 2
-        q_and_a_strings = RunApp.get_quiz_strings(2)
-        question = PrepQuizItems.new(q_and_a_strings[0])
-        question_hash = question.q_string_to_hash
-        answer = PrepQuizItems.new(q_and_a_strings[1])
-        answer_hash = answer.a_string_to_hash
+        inputs = RunApp.convert_quiz_strings_to_hashes(2)
+        Quiz.begin_quiz_menu(inputs)
       when 3
         puts "You want to see the quiz db"
         puts ""
