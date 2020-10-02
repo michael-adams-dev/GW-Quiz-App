@@ -1,22 +1,3 @@
-
-example_questions = {
-  1 => "Palmerston was the former name of which Australian city?",
-  2 => "What is a cartouche, used in French cooking, made from?",
-  3 => "New York City’s Queensboro Bridge crosses which river?",
-  4 => "Operation Overlord was the codename for which battle during World War II?",
-  5 => "Australia’s Indigenous NIFA awards celebrate excellence in what industry?"
-}
-
-example_answers = {
-  1 => "Darwin",
-  2 => "Paper (parchment or grease-proof; used to cover the surface of a stock, stew, sauce or
-  soup to reduce evaporation).",
-  3 => "East River.",
-  4 => "Battle (invasion) of Normandy (launched on June 6, 1944, D-Day).",
-  5 => "Fashion."
-}
-
-
 class Quiz
   
   attr_reader :questions, :actual_answers
@@ -36,20 +17,56 @@ class Quiz
     puts ""
     puts "Each question will be printed to the screen."
     puts "Once you see it, simply type in your answer and hit the enter/return key."
-    puts "Be careful, once you answer a question, you can't change it."
+    puts "If you can't think of an anser right away, you can skip the question and return to it at the end"
     puts ""
     puts "Ok, let's go! (Hit enter/return when you're ready)"
     gets
+  end
+
+  def option_to_skip
+    PROMPT.select("Answer now or skip?  You can come back to it if you skip") do |menu|
+      menu.choice "Answer now", 1
+      menu.choice "Skip for now", 2
+    end
+  end
+  
+  def option_to_skip_case(num)
+    case option_to_skip
+    when 1
+      print "> "
+      response = gets.strip
+      @user_answers[num] = response
+    when 2
+      @user_answers[num] = 'skipped'
+    end
   end
 
   def display_questions
     @questions.each do |number, question|
       puts ""
       puts "Question #{number}: #{question}"
-      print "> "
-      response = gets.strip
-      @user_answers[number] = response
       puts ""
+      option_to_skip_case(number)
+      puts ""
+    end
+  end
+
+  def skipped_questions_explanation
+    puts ""
+    puts "Now you can answer the questions that you skipped."
+    puts "If you can't think of an answer, just hit enter/return to pass."
+    puts "Once you've answered or passed these questions we'll go over the answers."
+    puts ""
+  end
+
+  def skipped_questions
+    @questions.each do |number, question|
+      if @user_answers[number] == 'skipped'
+        puts "Question #{number}: #{question}"
+        print "> "
+        response = gets.strip
+        @user_answers[number] = response
+      end
     end
   end
 
@@ -129,6 +146,8 @@ class Quiz
   def run_quiz
     self.questions_explanation
     self.display_questions
+    self.skipped_questions_explanation
+    self.skipped_questions
     self.answers_explanation
     self.display_results
     self.show_score
