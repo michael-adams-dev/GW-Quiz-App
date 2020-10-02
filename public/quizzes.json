@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "date": "Sep 19",
+    "questions": {"Hash of questions"},
+    "actual_answers": {"Hash of actual answers"},
+    "user_answers": {"Hash of user answers"},
+    "score": 0
+  }
+]
