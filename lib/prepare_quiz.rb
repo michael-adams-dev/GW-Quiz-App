@@ -91,7 +91,6 @@ class PrepQuizItems < String
     self.question_join
     self.sort_questions
     self.arr_to_hash
-    puts self.data
     return self.data
   end
 
@@ -173,7 +172,6 @@ class PrepQuizItems < String
     self.answer_join
     self.sort_answers
     self.arr_to_hash
-    puts self.data
     return self.data
   end
 end
