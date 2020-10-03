@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/run'
+require_relative '../lib/greeting'
+require_relative '../lib/quiz_helper'
+require_relative '../lib/menu'
+require_relative '../lib/picuki_doc'
+require_relative '../lib/quiz_data'
+require_relative '../lib/quiz_initialiser'
+require_relative '../lib/quiz'
+require_relative '../lib/prepare_quiz'
+
+require 'tty-prompt'
+require 'open-uri'
+require 'nokogiri'
+
+RunApp.run_greeting
+
+menu = Menu.new
+
+menu.display_main_menu
