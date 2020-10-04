@@ -11,6 +11,7 @@ class QuizData
     @quiz_page = Nokogiri::HTML.parse(URI.open(url))
   end
 
+  # Return the image URLs of the selected quiz questions and answers
   def get_image_urls
     image_containers = quiz_page.css("img[alt='goodweekendquiz']")
     questions_image_url = image_containers[0]['src']

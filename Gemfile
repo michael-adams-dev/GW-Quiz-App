@@ -21,3 +21,5 @@ gem "byebug", "~> 11.1"
 gem "terminal-table", "~> 1.8"
 
 gem "rubocop", "~> 0.92.0"
+
+gem "json", "~> 2.3"

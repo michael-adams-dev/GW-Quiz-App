@@ -15,14 +15,14 @@ class Greeting
     puts "Welcome to the Good Weekend Quiz App!"
     puts ""
     puts "Here you can download the Good Weekend quiz from the last two weeks."
-    puts "Alternatively, you can select a prior quiz from the quiz database."
+    puts "Alternatively, you can select a prior quiz from the quiz database, which contains all the quizzes you've previously downloaded."
   end
 
   # Method will get a random number in a range equal to the length
   # of the fun facts array. It them uses this number as an index to
   # get a random fact from the array and print to screen.
   def random_fact
-    fact_num = rand(0..1)
+    fact_num = rand(0..49)
     puts "Did you know? #{FACTS[fact_num]}"
     puts ""
     puts "Your quiz is almost ready..."

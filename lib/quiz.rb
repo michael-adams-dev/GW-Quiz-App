@@ -1,28 +1,42 @@
+require_relative 'quiz_helper'
+
+class PointsTooHigh < StandardError
+end
+
+class WrongCharacters < StandardError
+end
+
 class Quiz
   
+  include QuizHelper
+
   attr_reader :questions, :actual_answers
   attr_accessor :id, :date, :user_answers, :score
   
-  def initialize(questions_and_answers, id*, date*, user_answers*, score*)
+  def initialize(questions, actual_answers, id='', date='N/A', user_answers={}, score='-')
     @id = id
-    @date = ''
-    @questions = questions_and_answers.first
-    @actual_answers = questions_and_answers.last
-    @user_answers = {}
-    @score = 0
+    @date = date
+    @questions = questions
+    @actual_answers = actual_answers
+    @user_answers = user_answers
+    @score = score
   end
 
+  # Method below will be printed to give the user instructions on
+  # how to do the quiz
   def questions_explanation
     puts "Time to do the quiz!."
     puts ""
     puts "Each question will be printed to the screen."
     puts "Once you see it, simply type in your answer and hit the enter/return key."
-    puts "If you can't think of an anser right away, you can skip the question and return to it at the end"
+    puts "If you can't think of an answer right away, you can skip the question and return to it at the end."
     puts ""
     puts "Ok, let's go! (Hit enter/return when you're ready)"
     gets
   end
 
+  # The method below provides the uer with the option to skip the 
+  # question and return to it later
   def option_to_skip
     PROMPT.select("Answer now or skip?  You can come back to it if you skip") do |menu|
       menu.choice "Answer now", 1
@@ -30,6 +44,8 @@ class Quiz
     end
   end
   
+  # The method below controls what happens when the user either skips
+  # or answers a question
   def option_to_skip_case(num)
     case option_to_skip
     when 1
@@ -37,10 +53,12 @@ class Quiz
       response = gets.strip
       @user_answers[num] = response
     when 2
-      @user_answers[num] = 'skipped'
+      @user_answers[num] = 'no answer'
     end
   end
 
+  # The method below loops through all the questions and displays
+  # the question number and question
   def display_questions
     @questions.each do |number, question|
       puts ""
@@ -51,6 +69,8 @@ class Quiz
     end
   end
 
+  # The method below will print the message to the screen to explain that
+  # the user can now answer questions that were skipped.
   def skipped_questions_explanation
     puts ""
     puts "Now you can answer the questions that you skipped."
@@ -59,9 +79,12 @@ class Quiz
     puts ""
   end
 
+  # The method below loops through the questions and checks if they were skipped
+  # If the question was, the question is printed to screen and the user 
+  #  can answer it this time
   def skipped_questions
     @questions.each do |number, question|
-      if @user_answers[number] == 'skipped'
+      if @user_answers[number] == 'no answer'
         puts "Question #{number}: #{question}"
         print "> "
         response = gets.strip
@@ -70,6 +93,7 @@ class Quiz
     end
   end
 
+  # Method to give the user info on how answers work
   def answers_explanation
     system("clear")
     puts "Time for the answers!"
@@ -87,7 +111,10 @@ class Quiz
     gets
   end
 
+  # The method below will display each question, each user answer, and each 
+  # actual answer. 
   def display_results
+    @score = 0
     @questions.each do |number, question|
       puts ""
       puts "Question #{number}: #{question}"
@@ -96,13 +123,35 @@ class Quiz
       gets
       puts "Actual answer: #{@actual_answers[number]}"
       puts ""
-      puts "How many points?"
-      print "> "
-      @score += gets.strip.to_f
+      score_rescue
       puts ""
     end
   end
 
+  # The method below is run during the display results method and allows
+  # the user to add to their score
+  # it can handle errors for invalid inputs like factions or scores greater than 1 per question.
+  def score_rescue
+    begin
+      puts "How many points?"
+      print "> "
+      points = gets.strip
+      raise WrongCharacters if points.include?('/')
+      raise PointsTooHigh if points.to_f > 1
+    rescue WrongCharacters
+      puts "Please use decimals instead of fractions"
+      puts ''
+      retry
+    rescue PointsTooHigh
+      puts "Each question is worth a maximum of one point"
+      puts ''
+      retry
+    end
+    @score += points.to_f
+  end
+
+  # The method below shows the user their score and displays a message
+  # depending on what their score was
   def show_score
     puts ""
     puts "Your total is: #{@score}/25"
@@ -116,11 +165,20 @@ class Quiz
       puts "Might need some more help next time!"
     when 13..14
       puts "Not too bad!"
-    when 15..16
+    when 15..17
+      puts "Nice work!"
+    when 18..19
+      puts "Great score!"
+    when 20..21
+      puts "You cracked 20, excellent effort"
+    when 22..24
+      puts "That was out of this world!"
+    when 25
+      puts "Me oh my, perfect score!"
     end
-    puts "Nice Job!"
   end
 
+  # The method below allows the user to decide if they want to begin the quiz once downloaded
   def self.begin_quiz
     system("clear")
     puts ""
@@ -132,17 +190,20 @@ class Quiz
     end
   end
 
-  def self.begin_quiz_menu(quiz_inputs)
+  # The method below will either run the quiz or take the user back to the
+  # main menu depending on their selection in begin_quiz
+  def self.begin_quiz_menu(questions, actual_answers)
     case Quiz.begin_quiz
     when 1
       system("clear")
-      new_quiz = Quiz.new(quiz_inputs)
+      new_quiz = Quiz.new(questions, actual_answers)
       new_quiz.run_quiz
     when 2
       system("clear")
     end
   end
 
+  # The method below combines previous methods to run the quiz.
   def run_quiz
     self.questions_explanation
     self.display_questions
@@ -153,11 +214,3 @@ class Quiz
     self.show_score
   end
 end
-
-# new_quiz = Quiz.new([example_questions, example_answers])
-
-# new_quiz.questions_explanation
-# new_quiz.display_questions
-# new_quiz.answers_explanation
-# new_quiz.display_results
-# new_quiz.show_score

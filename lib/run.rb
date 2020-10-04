@@ -15,7 +15,6 @@ class RunApp
   include QuizHelper
 
   def initialize
-
   end
 
   # Creates a new greeting object then prints the greeting
@@ -27,21 +26,35 @@ class RunApp
   # This will create a new Picuki doc object 
   # based off the user's seletion and get the quiz url
   def self.get_picuki_doc(num)
-    puts ""
-    puts "Finding selection..."
-    puts ""
-    doc = PicukiDoc.new(PICUKI)
-    return doc.get_selected_quiz_url(num)
+    begin
+      puts ""
+      puts "Finding selection..."
+      puts ""
+      doc = PicukiDoc.new(PICUKI)
+    rescue SocketError
+      puts "No internet connection detected"
+      puts "Please ensure you are connected to the internet"
+      menu = Menu.new
+      menu.display_main_menu
+    end
+      return doc.get_selected_quiz_url(num)
   end
 
   # This will take the quiz URL returned from get_picuki_doc
   # It then creats a new doc object, search through this doc
   # And return the q&a image URLs
   def self.get_qanda_urls(num)
-    chosen_quiz = RunApp.get_picuki_doc(num)
-    puts "Finding quiz data..."
-    puts ""
-    data = QuizData.new(chosen_quiz)
+    begin
+      chosen_quiz = RunApp.get_picuki_doc(num)
+      puts "Finding quiz data..."
+      puts ""
+      data = QuizData.new(chosen_quiz)
+    rescue SocketError
+      puts "No internet connection detected"
+      puts "Please ensure you are connected to the internet"
+      menu = Menu.new
+      menu.display_main_menu
+    end
     return data.get_image_urls
   end
 
@@ -50,16 +63,28 @@ class RunApp
   def self.get_quiz_strings(num)
     urls = RunApp.get_qanda_urls(num)
     QuizInitialiser.download_images(urls)
-    QuizInitialiser.images_to_strings(PATH_TO_IMAGES)
   end
 
+  # Converts the quiz images to stings then converts these strings 
+  # to hashes to be used in the quiz
+  # Combines methods from other classes to do this
   def self.convert_quiz_strings_to_hashes(num)
-    q_and_a_strings = RunApp.get_quiz_strings(num)
-    question = PrepQuizItems.new(q_and_a_strings[0])
+    RunApp.get_quiz_strings(num)
+    image_converter = QuizInitialiser.new(PATH_TO_IMAGES)
+    image_converter.images_to_strings
+    question = PrepQuizItems.new(image_converter.questions)
     question_hash = question.q_string_to_hash
-    answer = PrepQuizItems.new(q_and_a_strings[1])
+    answer = PrepQuizItems.new(image_converter.answers)
     answer_hash = answer.a_string_to_hash
     return [question_hash, answer_hash]
+  end
+
+  # Create a new quiz object and runs the quiz.
+  def self.start_quiz(num)
+    inputs = RunApp.convert_quiz_strings_to_hashes(num)
+    questions = inputs.first
+    actual_answers = inputs.last
+    Quiz.begin_quiz_menu(questions, actual_answers)
   end
 end
 

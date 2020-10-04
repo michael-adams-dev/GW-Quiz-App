@@ -175,8 +175,3 @@ class PrepQuizItems < String
     return self.data
   end
 end
-
-
-# ans1 = "QUIZ ANSWERS\n\n1 Darwin.\n2. Paper (parchment or grease-proof; used to cover the surface of a stock,\nstew, sauce or soup to reduce evaporation).\n3 East River.\n4 Battle (invasion) of Normandy (launched on June 6, 1944, D-Day).\n5 Fashion.\n6 “Thrilla in Manila”.\n7 On an aircraft (attached to the outboard trailing edge of each wing,\nused to control a plane when rolling or banking).\n\n8 Sarah Snook.\n\n9 Wurundjeri.\n\n10 Lady Gaga.\n\n11 A Cavalier King Charles spaniel and a poodle.\n12 Broadcaster video-on-demand.\n\n13 Korean Air.\n\n14 Bob Hawke.\n15 Sea snail.\n\n16 Heights.\n17 Ten-pin bowling (three strikes in a row).\n18 Germany, Switzerland and Austria.\n19 Plimsoll line.\n20 Groove Armada.\n21 Snagglepuss (cartoon character created by Hanna-Barbera).\n22 Fruit. 23 The speed of light.\n24 Coronation.\n25 Canberra (ACT) and Griffith (NSW).\n\nGET IT? Halfback.\n\f"
-
-# puts a_string_to_hash(ans1)
